@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="ESIL.DataWorker">
+      <HintPath>ESIL.DataWorker.dll</HintPath>
+    </Reference>
+    <Reference Include="ESIL.Kriging">
+      <HintPath>ESIL.Kriging.dll</HintPath>
+    </Reference>
+    <Reference Include="LumenWorks.Framework.IO">
+      <HintPath>LumenWorks.Framework.IO.DLL</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>MathNet.Numerics.DLL</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>protobuf-net.DLL</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>System.Windows.Forms.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+</Project>
