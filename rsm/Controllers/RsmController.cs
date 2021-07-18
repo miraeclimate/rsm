@@ -71,7 +71,7 @@ try
         {
             // string rsmPath = @"C:\rsm\RSM.rsm";
             // string rsmPath = @"C:\rsm\guidePM25.rsm";
-            string rsmPath = @"C:\rsm\PM25_Jan_small_0714_nonlinear.rsm";
+            string rsmPath = @"/rsmfiles/PM25_Jan_small_0714_nonlinear.rsm";
 
             // rsm 파일 읽기(.rsm)
             ESIL.DataWorker.RSMBaseClass rsm = new ESIL.DataWorker.RSMBaseClass();
