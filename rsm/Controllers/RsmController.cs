@@ -67,12 +67,25 @@ try
 
 
         [HttpPost]
-        public RsmResponse Post(List<double> inputFactors)
+        public RsmResponse Post(RsmInput input /* List<double> factors, string area */)
         {
+            _logger.LogInformation("factors: {factors}", input.factors);
+            _logger.LogInformation("area: {area}", input.area);
+
             // string rsmPath = @"C:\rsm\RSM.rsm";
             // string rsmPath = @"C:\rsm\guidePM25.rsm";
-            string rsmPath = @"/rsmfiles/PM25_Jan_small_0714_nonlinear.rsm";
+            // string rsmPath = @"C:\rsm\PM25_Jan_small_0714_nonlinear.rsm";
 
+            // string rsmPath = @"/rsmfiles/PM25_Jan_small_0714_nonlinear.rsm";
+            string rsmPath = "";
+            if (input.area.Equals("capital"))
+            {
+                rsmPath = @"/rsmfiles/PM25_Jan_small_0714_nonlinear.rsm";
+            } else
+            {
+                rsmPath = @"/rsmfiles/2021_09km_PM25_MICSPM_nonlinear.rsm";
+            }
+            
             // rsm 파일 읽기(.rsm)
             ESIL.DataWorker.RSMBaseClass rsm = new ESIL.DataWorker.RSMBaseClass();
             ESIL.Kriging.RSMWorker rsmWorker = new ESIL.Kriging.RSMWorker();
@@ -95,6 +108,7 @@ try
             ESIL.DataWorker.FactorInfo[] futureFactor = new ESIL.DataWorker.FactorInfo[rsm.rsmParam.Factors.Count];
             _logger.LogInformation("futureFactor count: {count}", futureFactor.Length);
             
+            /*
             List<double> factors = new List<double>();
 
             for (int i = 0; i < futureFactor.Length; i++)
@@ -111,11 +125,11 @@ try
             }
             
             _logger.LogInformation("factors: {factors}", factors);
-
-            _logger.LogInformation("Input factors: {factors}", inputFactors);
+            */
+            _logger.LogInformation("Input factors: {factors}", input.factors);
 
             // 팩터 적용하여 셀농도 수정
-            double[] val = rsmWorker.GetResponseValue(rsmPath, inputFactors.ToArray());
+            double[] val = rsmWorker.GetResponseValue(rsmPath, input.factors.ToArray());
             _logger.LogInformation("val count: {count}", val.Length);
             // 1차원 배열을 2차원 배열로 수정 : RSM 셀[col, row] 형식으로
             ESIL.DataWorker.ModelAttribute modelAtt = rsmWorker.GetModelAttribute(rsmPath);
@@ -126,6 +140,13 @@ try
             response.row = (int)modelAtt.RowCount;
             return response;
         }
+
+        public class RsmInput
+        {
+            public double[] factors { get; set; }
+            public string area { get; set; }
+        }
+
         public class RsmResponse
         {
             public double[] values { get; set; }
